@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>あいえむがちゃ</title>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>gacha</title>
 </head>
 <style type="text/css">
     .hito {
@@ -16,12 +15,13 @@
 
 <body>
     <canvas style="position:absolute;visibility:hidden;"></canvas>
-    参加者一覧
+    【LIST】
     <div id="app"></div>
     <button id='start'>スタート</button>
     <div id='result'>
         <img id="alt" />
     </div>
+    【GET】
     <div id="selected"></div>
     <script>
         var canvas, ctx, timer, isstart, count, tim, rand, xors, iso, imas, gim;
@@ -47,13 +47,16 @@
         ];
 
         for (hito of data) {
-            var html = '<div class=hito>' + hito + '</div>';
-            $('#app').append(html);
+            var div = document.createElement('div');
+            var textNode = document.createTextNode(hito);
+            document.getElementById('app').appendChild(div);
+            div.className = 'hito';
+            div.appendChild(textNode);
         }
 
-        $('button').click(function () {
+        document.getElementById('start').onclick = function () {
             aaa(data[Math.floor(Math.random() * data.length)]);
-        })
+        }
 
         function setseed() {
             xors = { x: 123456789, y: 362436069, z: 521288629, w: namnam("seedti", 0, 10000000, 0) };
@@ -63,8 +66,12 @@
 
         function aaa(value) {
             if (data.length > 0) {
-                $("#app").children().remove(`:contains(` + value + `)`);
-                $('#selected').append('<div class=hito>' + value + '</div>');
+                var hito = document.createElement('div');
+                var textNode = document.createTextNode(value);
+
+                document.getElementById('selected').appendChild(hito);
+                hito.className = 'hito';
+                hito.appendChild(textNode);
 
                 for (i = 0; i < data.length; i++) {
                     if (data[i] == value) data.splice(i, 1);
